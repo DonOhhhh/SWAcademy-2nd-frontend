@@ -20,12 +20,16 @@ export default function App({ $target }) {
 
     this.state = {
         username: 'roto',
-        todos: []
+        todos: [],
+        isTodoLoading: false
     }
 
     const header = new Header({
         $target,
-        initialState: this.state.username
+        initialState: {
+            isTodoLoading: this.state.isTodoLoading,
+            username: this.state.username
+        }
     })
 
     const todoForm = new TodoForm({
@@ -43,35 +47,72 @@ export default function App({ $target }) {
                     todos
                 ]
             })
-            await request(`${this.state.username}`,{
+            await request(`${this.state.username}?delay=3000`,{
                 method: 'POST',
                 body: JSON.stringify(todos)
             })
-            await init()
+            await fetchTodo()
         }
     })
     this.setState = nextState => {
         this.state = nextState
-        todoList.setState(this.state.todos)
+        header.setState({
+            isTodoLoading: this.state.isTodoLoading,
+            username: this.state.username
+        })
+        todoList.setState({
+            isTodoLoading: this.state.isTodoLoading,
+            todos: this.state.todos
+        })
     }
     const todoList = new TodoList({
         $target,
-        initialState: this.state.todos,
-        onToggle: (id) => {
-            alert(`${id} : 토글 예정`)
+        initialState: {
+            isTodoLoading: this.state.isTodoLoading,
+            todos: this.state.todos
         },
-        onRemove: (id) => {
-            alert(`${id} : 삭제 예정`)
+        onToggle: async (id) => {
+            const todoIndex = this.state.todos.findIndex(todo=>todo._id === id);
+            const nextTodos = [...this.state.todos]
+            nextTodos[todoIndex].isCompleted = !nextTodos[todoIndex].isCompleted
+            this.setState({
+                ...this.state,
+                todos: nextTodos
+            })
+            await request(`${this.state.username}/${id}/toggle?delay=3000`, {
+                method: 'PUT'
+            })
+            await fetchTodo()
+        },
+        onRemove: async (id) => {
+            const todoIndex = this.state.todos.findIndex(todo=>todo._id === id);
+            const nextTodos = [...this.state.todos]
+            nextTodos.splice(todoIndex,1)
+            this.setState({
+                ...this.state,
+                todos: nextTodos
+            })
+            await request(`${this.state.username}/${id}?delay=3000`,{
+                method: 'DELETE'
+            })
+            await fetchTodo()
         }
     })
 
     const fetchTodo = async() => {
         const {username} = this.state
-        if(this.state.username) {
-            const todos = await request(`${username}?delay=5000`)
+        if(username) {
             this.setState({
                 ...this.state,
-                todos
+                isTodoLoading: true
+            })
+        }
+        if(this.state.username) {
+            const todos = await request(`${username}?delay=1000`)
+            this.setState({
+                ...this.state,
+                todos,
+                isTodoLoading: false
             })
         }
     }
