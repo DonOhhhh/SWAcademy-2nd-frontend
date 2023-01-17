@@ -13,6 +13,10 @@ export default function TodoList({ $target, initialState, onToggle, onRemove }) 
         this.render();
     }
     this.render = () => {
+        if(this.state.length===0) {
+            $todo.innerHTML = `<ul>Todo가 없습니다.</ul>`
+            return
+        }
         $todo.innerHTML =
             `
         <ul>
