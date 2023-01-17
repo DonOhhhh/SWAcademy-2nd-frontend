@@ -1,4 +1,4 @@
-export default function UserList({ $target, initialState, onSelect, onRemove }) {
+export default function UserList({ $target, initialState, onSelect }) {
     const $userList = document.createElement('div')
     $target.appendChild($userList)
 
@@ -15,11 +15,8 @@ export default function UserList({ $target, initialState, onSelect, onRemove }) 
         <h1>Users</h1>
         <ul>
             ${this.state.map(username =>
-                `<li data-username="${username}">
+            `<li data-username="${username}">
                 ${username}
-                <button data-username="${username}">
-                    x
-                </button>
             </li>`
             ).join('')}
             <li>
@@ -38,11 +35,6 @@ export default function UserList({ $target, initialState, onSelect, onRemove }) 
         if ($li) {
             const { username } = $li.dataset
             onSelect(username);
-        }
-        const $btn = e.target.closest('button[data-username]')
-        if ($btn) {
-            const { username } = $btn.dataset
-            onRemove(username)
         }
     })
 

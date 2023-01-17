@@ -13,7 +13,7 @@ export default function Header({ $target, initialState }) {
             $h2.innerHTML = ''
             return
         }
-        $h2.innerHTML = `${selectedUsername} 님의 할 일 목록 ${isTodoLoading ? `로딩 중...` : ''}`
+        $h2.innerHTML = `${decodeURI(selectedUsername)} 님의 할 일 목록 ${isTodoLoading ? `로딩 중...` : ''}`
     }
     this.render();
 }
