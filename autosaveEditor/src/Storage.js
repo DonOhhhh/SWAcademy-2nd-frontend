@@ -1,6 +1,9 @@
 const storage = window.localStorage
 
-export const getItem = (key, defaultValue) => {
+export const getItem = (key, defaultValue = {
+    title: '',
+    content: ''
+}) => {
     try {
         const storedValue = storage.getItem(key)
         return storedValue ? JSON.parse(storedValue) : defaultValue

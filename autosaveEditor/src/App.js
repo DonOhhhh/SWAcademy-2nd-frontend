@@ -1,5 +1,6 @@
 import PostEditPage from "./PostEditPage.js";
 import PostsPage from "./PostsPages.js";
+import { initRouter } from "./router.js";
 
 export default function App({ $target }) {
     // url 규칙
@@ -31,10 +32,6 @@ export default function App({ $target }) {
         }
     }
     window.addEventListener('popstate', this.route)
-    window.addEventListener('route-change', e => {
-        console.log(e.detail)
-        // history.pushState(null, null, nextUrl)
-        // this.route();
-    })
+    initRouter(this.route);
     this.route();
 }

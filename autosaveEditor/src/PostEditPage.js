@@ -1,5 +1,7 @@
 import { request } from "./API.js";
 import Editor from "./Editor.js";
+import LinkButton from "./LinkButton.js";
+import { push } from "./router.js";
 import { getItem, removeItem, setItem } from "./Storage.js";
 
 export default function PostEditPage({ $target, initialState }) {
@@ -28,16 +30,19 @@ export default function PostEditPage({ $target, initialState }) {
                 ...post,
                 tempSaveData: new Date()
             })
-            timer = setTimeout(async () => {  
+            timer = setTimeout(async () => {
                 const isNew = this.state.postId === 'new'
-                if(isNew) {
+                if (isNew) {
                     const createdPost = await request('/posts', {
                         method: 'POST',
                         body: JSON.stringify(post)
                     })
                     history.replaceState(null, null, `/posts/${createdPost.id}`)
+                    this.setState({
+                        postId: createdPost.id
+                    })
                 } else {
-                    const serverPost = await request(`/posts/${post.id}`,{
+                    const serverPost = await request(`/posts/${post.id}`, {
                         method: 'PUT',
                         body: JSON.stringify(post)
                     })
@@ -51,7 +56,12 @@ export default function PostEditPage({ $target, initialState }) {
         if (this.state.postId !== nextState.postId) {
             postLocalSaveKey = `temp-post-${this.state.postId}`
             this.state = nextState
-            await fetchPost()
+            if (nextState.postId === 'new') {
+                editor.setState(getItem(postLocalSaveKey))
+                this.render();
+            } else {
+                await fetchPost()
+            }
             return
         }
         this.state = nextState;
@@ -84,6 +94,13 @@ export default function PostEditPage({ $target, initialState }) {
                 post
             })
         }
-
     }
+
+    new LinkButton({
+        $target: $page,
+        initialState: {
+            text: '목록으로',
+            link: '/'
+        }
+    })
 }
