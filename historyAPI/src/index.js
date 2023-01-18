@@ -7,6 +7,8 @@ function route() {
         $container.innerHTML = `<h1>게시글 목록</h1>`
     } else if (pathname === '/article-list') {
         $container.innerHTML = `<h1>상품 목록</h1>`
+    } else {
+        $container.innerHTML = '<h1>Home</h1>'
     }
 }
 route()
