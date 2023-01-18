@@ -11,13 +11,10 @@ export default function PostsPage({ $target }) {
     //     this.state = nextState;
     //     this.render();
     // }
-    
+
     const postList = new PostList({
-        $target,
-        initialState: [],
-        onPostClick: (id) => {
-            console.log(this.state.find(e => e.id === id));
-        }
+        $target: $page,
+        initialState: []
     })
 
     const $newPostButton = document.createElement('button')

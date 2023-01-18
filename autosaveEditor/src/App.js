@@ -13,7 +13,7 @@ export default function App({ $target }) {
         $target,
         initialState: {
             postId: 'new',
-            post : {
+            post: {
                 title: '',
                 content: ''
             }
@@ -21,6 +21,7 @@ export default function App({ $target }) {
     })
 
     this.route = () => {
+        $target.innerHTML = ``
         const { pathname } = window.location
         if (pathname === '/') {
             postsPage.render();
@@ -29,6 +30,11 @@ export default function App({ $target }) {
             postEditPage.setState({ postId })
         }
     }
-
+    window.addEventListener('popstate', this.route)
+    window.addEventListener('route-change', e => {
+        console.log(e.detail)
+        // history.pushState(null, null, nextUrl)
+        // this.route();
+    })
     this.route();
 }
