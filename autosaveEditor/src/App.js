@@ -2,18 +2,33 @@ import PostEditPage from "./PostEditPage.js";
 import PostsPage from "./PostsPages.js";
 
 export default function App({ $target }) {
-    // const postPage = new PostsPage({
-    //     $target
-    // })
-    // postPage.render();
+    // url 규칙
+    // 루트: postsPage 그리기
+    // /posts/{id} - id에 해당하는 post 생성
+    // /posts/new - 새 post 생성
+    const postsPage = new PostsPage({
+        $target
+    })
     const postEditPage = new PostEditPage({
         $target,
-        initialState : {
-            postId: 'new'
+        initialState: {
+            postId: 'new',
+            post : {
+                title: '',
+                content: ''
+            }
         }
     })
 
-    postEditPage.setState({
-        postId: 1
-    });
+    this.route = () => {
+        const { pathname } = window.location
+        if (pathname === '/') {
+            postsPage.render();
+        } else if (pathname.indexOf('/posts/') === 0) {
+            const [, , postId] = pathname.split('/')
+            postEditPage.setState({ postId })
+        }
+    }
+
+    this.route();
 }
