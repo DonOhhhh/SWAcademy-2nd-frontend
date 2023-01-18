@@ -14,7 +14,9 @@ export default function Editor({
     this.setState = (nextState) => {
         this.state = nextState;
         $editor.querySelector('[name=title]').value = this.state.title
-        $editor.querySelector('[name=content]').value = this.state.content
+        $editor.querySelector('[name=content]').innerHTML = this.state.content.replace(/\n/g,'<br>')
+        // 서버에서 내려오는 개행값 \n
+        // textarea에서는 \n으로 개행을 처리해줌.
         this.render();
     }
 
@@ -22,7 +24,7 @@ export default function Editor({
         if (!isInitialized) {
             $editor.innerHTML = `
             <input type="text" name="title" style="width:600px;display:block;" value="${this.state.title}"/>
-            <textarea name="content" style="width:600px; height:400px;">${this.state.content}</textarea>
+            <div name="content" contentEditable="true" style="width:600px; height:400px;">${this.state.content}</div>
             `
             isInitialized = true
         }

@@ -30,6 +30,7 @@ export default function PostEditPage({ $target, initialState }) {
                 ...post,
                 tempSaveData: new Date()
             })
+            
             timer = setTimeout(async () => {
                 const isNew = this.state.postId === 'new'
                 if (isNew) {
