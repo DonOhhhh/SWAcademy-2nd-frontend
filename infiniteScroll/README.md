@@ -9,13 +9,17 @@
   - intersection observer 방식 : 내가 지정한 DOM요소가 사용자가 보고 있는 시야에 닿았는지 감지하여 처리하는 방식
 - 컴포넌트 구조
 
-![컴포넌트 구조](/img/컴포넌트%20구조.png)
+![컴포넌트 구조](/infiniteScroll/img/컴포넌트%20구조.png)
   
 - 불러온 데이터를 photoList라는 이름으로 PhotoList 컴포넌트에 내려줌.
 - PhotoList 컴포넌트에서는 스크롤이 그리는 화면의 끝에 거의 다다랐으면 App에서 넘겨준 onScrollEnded 콜백 함수를 실행시킨다.
 - 사용할 API
-```
+```javascript
 // limit : 한 번에 가져올 고양이 사진의 개수, 5로 고정
 // start : 몇 번째 사진부터 가져올 건지
-https://mwu.roto-frontend.programmers.co.kr/cap_photo?_limit=${limit}&_start=${start}
+'https://mwu.roto-frontend.programmers.co.kr/cat-photos?_limit=${limit}&_start=${start}'
 ```
+
+- 스크롤을 이용해서 컨텐츠의 끝에 닿아가는지 확인하는 로직을 구현
+- 끝에 닿으면 onScrollEnded를 호출해서 다음 데이터를 받아온다.(API 이용)
+- 원래 있던 데이터에 다음 데이터를 setState로 붙인다.
