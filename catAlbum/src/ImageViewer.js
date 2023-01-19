@@ -1,8 +1,9 @@
-export default function ImageViewer({ $target }) {
+export default function ImageViewer({ $target, onClose }) {
     const $imageViewer = document.createElement('div')
-    $imageViewer.className = "ImageViewer"
+    $imageViewer.className = "ImageViewer Modal"
+    $target.appendChild($imageViewer)
     this.state = {
-        imageUrl: null
+        selectedImageUrl: null
     }
 
     this.setState = nextState => {
@@ -11,12 +12,23 @@ export default function ImageViewer({ $target }) {
     }
 
     this.render = () => {
-        $imageViewer.style.display = this.state.imageUrl ? 'block' : 'none';
+        $imageViewer.style.display = this.state.selectedImageUrl ? 'block' : 'none';
         $imageViewer.innerHTML = `
             <div class="content">
-                <img src="${this.state.imageUrl}"/>
+                <img src="${this.state.selectedImageUrl}"/>
             </div>
             `
     }
-    this.render();
+    // this.render();
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            onClose();
+        }
+    })
+
+    window.addEventListener('click', e => {
+        if(Array.from(e.target.classList).includes('Modal')) {
+            onClose();
+        }
+    })
 }

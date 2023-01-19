@@ -23,7 +23,6 @@ export default function Nodes({ $target, initialState, onClick }) {
         `).join('')}
         `
     }
-    this.render();
 
     $nodes.addEventListener('click', e => {
         const $node = e.target.closest('.Node')

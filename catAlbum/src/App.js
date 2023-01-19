@@ -1,11 +1,13 @@
-import { request } from './API.js'
+import { API_END_POINT, request } from './API.js'
+import ImageViewer from './ImageViewer.js';
 import Nodes from './Nodes.js'
 
 export default function App({ $target }) {
 
     this.state = {
         isRoot: true,
-        nodes: []
+        nodes: [],
+        selectedImageUrl: null
     }
 
     const nodes = new Nodes({
@@ -15,12 +17,34 @@ export default function App({ $target }) {
             if (node.type === 'DIRECTORY') {
                 await fetchNodes(node.id);
             }
+            if(node.type === 'FILE') {
+                this.setState({
+                    ...this.state,
+                    selectedImageUrl: `${API_END_POINT}/static${node.filePath}`
+                })
+            }
+        }
+    })
+
+    const imageViewer = new ImageViewer({
+        $target,
+        onClose: () => {
+            this.setState({
+                ...this.state,
+                selectedImageUrl: null
+            })
         }
     })
 
     this.setState = nextState => {
         this.state = nextState;
-        nodes.setState(nextState)
+        nodes.setState({
+            isRoot: this.state.isRoot,
+            nodes: this.state.nodes
+        })
+        imageViewer.setState({
+            selectedImageUrl: this.state.selectedImageUrl
+        })
     }
 
     const fetchNodes = async (id) => {

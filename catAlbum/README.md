@@ -18,3 +18,9 @@ https://cdn.roto.codes/css/cat-photos.css
 https://cdn.roto.codes/images/file.png
 https://cdn.roto.codes/images/prev.png
 ```
+
+## (4)
+
+- directory에 들어가면 사진 목록 렌더링해오는 기능
+- 사진 누르면 이미지 overlay창으로 띄워주는 기능
+- overlay된 창에서 esc키나 content밖을 클릭하면 overlay 없애주는 기능
