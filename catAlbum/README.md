@@ -11,4 +11,10 @@
 
 ![컴포넌트](./imgs/component.png)
 
-- API : `https://mwu.roto-cat-api.programmers.co.kr/`
+- API : 
+```
+https://mwu.roto-cat-api.programmers.co.kr/
+https://cdn.roto.codes/css/cat-photos.css
+https://cdn.roto.codes/images/file.png
+https://cdn.roto.codes/images/prev.png
+```
