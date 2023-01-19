@@ -3,21 +3,22 @@ export default function PhotoList({ $target, initialState, onScrollEnded }) {
     const $photoList = document.createElement('div')
     $target.appendChild($photoList)
     this.state = initialState
-    let $lastLi = null;
-    let i = 0;
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             // 해당 엔트리가 화면에 보이는지 체크
             if (entry.isIntersecting && !this.state.isLoading) {
-                console.log("화면 끝",i++)
-                onScrollEnded();
+                observer.unobserve(entry.target);
+                console.log(entry.target)
+                if(this.state.totalCount > this.state.photos.length) {
+                    onScrollEnded();
+                }
             }
         })
     }, {
         // 0 : 감시하는 요소가 화면에 조금이라도 보이면 이벤트 발생
         // 1 : 감시하는 요소가 화면에 전부 보여야 이벤트 발생
         // 0.5 : 감시하는 요소가 화면에 절반이 보여야 이벤트 발생
-        threshold: 1
+        threshold: 0.5
     })
     this.setState = nextState => {
         this.state = nextState
@@ -47,12 +48,8 @@ export default function PhotoList({ $target, initialState, onScrollEnded }) {
             }
         })
 
-        const $nextLi = $photos.querySelector('li:last-child')
-        if ($nextLi) {
-            if($lastLi) {
-                observer.unobserve($lastLi);
-            }
-            $lastLi = $nextLi
+        const $lastLi = $photos.querySelector('li:last-child')
+        if ($lastLi) {
             observer.observe($lastLi);
         }
     }
