@@ -35,15 +35,17 @@ export default function SuggestKeywords({ $target, initialState, onKeywordSelect
             if (e.key === 'ArrowUp') {
                 this.setState({
                     ...this.state,
-                    cursor: (cursor < 0 ? (keywords.length - 1) : (cursor - 1)) % keywords.length
+                    cursor: cursor < 0 ? (keywords.length - 1) : (cursor - 1)
                 })
             } else if (e.key === 'ArrowDown') {
                 this.setState({
                     ...this.state,
-                    cursor: (cursor + 1) % keywords.length
+                    cursor: cursor >= keywords.length ? 0 : cursor + 1
                 })
             } else if (e.key === 'Enter') {
-                onKeywordSelect(keywords[cursor])
+                const activatedElem = document.querySelector('li.active')
+                if (activatedElem)
+                    onKeywordSelect(keywords[cursor])
             }
         }
     })

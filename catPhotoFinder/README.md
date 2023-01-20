@@ -1,5 +1,4 @@
 # 고양이 사진 검색기 만들기
-
 ## 요구사항
 
 ---
@@ -21,7 +20,9 @@ https://mwu.roto-cat-search-api.programmers.co.kr/api/cats
 https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 
 ```
+## 구현 기능
 
+---
 ### (2)
 - 기본 화면 구성 및 키워드 입력 받기
 
@@ -30,3 +31,6 @@ https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 - 추천된 검색어 중에서 하나를 클릭하면 해당 값으로 input창의 값이 바뀌는 기능
 - 추천된 검색어 창에서 key up, down을 입력했을 때 선택된 항목의 색깔이 바뀌는 기능
 - 항목을 선택하고 enter를 누르면 검색창의 값이 해당 값으로 바뀌는 기능
+
+### (4)
+- 키워드를 선택하면 해당 키워드로 search API를 호출하여 결과를 화면에 보여주는 기능

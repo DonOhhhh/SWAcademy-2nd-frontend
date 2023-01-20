@@ -1,4 +1,4 @@
-export default function Keyword({ $target, initialState, onKeywordInput }) {
+export default function Keyword({ $target, initialState, onKeywordInput, onEnter }) {
     const $keyword = document.createElement('input')
     $keyword.className = 'Keyword'
     $target.appendChild($keyword)
@@ -7,10 +7,16 @@ export default function Keyword({ $target, initialState, onKeywordInput }) {
 
     this.setState = nextState => {
         this.state = nextState
-        $keyword.value = this.state.value
+        $keyword.value = nextState.value
     }
 
     $keyword.addEventListener('keyup', e => {
-        onKeywordInput(e.target.value);
+        if (e.target.value.trim().length > 1) {
+            if (e.key === 'Enter') {
+                onEnter(e.target.value);
+            } else {
+                onKeywordInput(e.target.value);
+            }
+        }
     })
 }
