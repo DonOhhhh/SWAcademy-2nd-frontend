@@ -21,3 +21,9 @@ https://mwu.roto-cat-search-api.programmers.co.kr
 https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 
 ```
+
+### (2)
+- 기본 화면 구성 및 키워드 입력 받기
+
+### (3)
+- 검색 키워드를 추천해주는 API를 APP에서 호출하고 거기서 받은 데이터를 keyword라고 하는 component로 내려줘서 추천된 내역을 보여주기
