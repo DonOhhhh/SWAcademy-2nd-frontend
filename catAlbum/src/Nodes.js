@@ -1,4 +1,4 @@
-export default function Nodes({ $target, initialState, onClick }) {
+export default function Nodes({ $target, initialState, onClick, onPrevClick }) {
     const $nodes = document.createElement('div')
     $nodes.classList.add('Nodes')
     $target.appendChild($nodes)
@@ -36,7 +36,7 @@ export default function Nodes({ $target, initialState, onClick }) {
         if(node) {
             onClick(node);
         } else {
-            alert('올바르지 않은 노드입니다.')
+            onPrevClick();
         }
     })
 }

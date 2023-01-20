@@ -24,3 +24,8 @@ https://cdn.roto.codes/images/prev.png
 - directory에 들어가면 사진 목록 렌더링해오는 기능
 - 사진 누르면 이미지 overlay창으로 띄워주는 기능
 - overlay된 창에서 esc키나 content밖을 클릭하면 overlay 없애주는 기능
+
+## (5)
+
+- 뒤로 가기를 눌렀을 때 진짜 바로 뒤 페이지로 가는 기능
+- 로딩 중일 때 고양이 gif가 뜨면서 로딩 중임을 알리는 기능
