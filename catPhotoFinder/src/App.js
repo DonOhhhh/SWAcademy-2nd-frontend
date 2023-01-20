@@ -1,6 +1,8 @@
 import SearchResults from "../SearchResults.js"
 import { request } from "./API.js"
+import Debounce from "./Debounce.js"
 import Header from "./Header.js"
+import { getItem, setItem } from "./Storage.js"
 import SuggestKeywords from "./SuggestKeywords.js"
 
 export default function App({ $target }) {
@@ -25,13 +27,12 @@ export default function App({ $target }) {
         initialState: {
             keyword: this.state.keyword
         },
-        onKeywordInput: async (keyword) => {
-            const keywords = await request(`/keywords?q=${keyword}`)
+        onKeywordInput: Debounce(async (keyword) => {
             this.setState({
                 ...this.state,
                 keywords
             })
-        },
+        }, 300),
         onEnter: (keyword) => {
             this.setState({
                 ...this.state,

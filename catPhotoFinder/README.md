@@ -34,3 +34,7 @@ https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 
 ### (4)
 - 키워드를 선택하면 해당 키워드로 search API를 호출하여 결과를 화면에 보여주는 기능
+
+### (5)
+- debounce를 이용해서 keyword 입력 후에 API 콜을 조금 더 효율적으로 만든다.
+- sessionStorage 이용하는 방법은 SPA의 기본 동작 구조를 벗어나서 this.cached라는 멤버를 생성하기 때문에 불필요하다고 느껴서 구현하지 않음.
