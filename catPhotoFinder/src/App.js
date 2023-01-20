@@ -1,17 +1,50 @@
+import { request } from "./API.js"
 import Header from "./Header.js"
+import SuggestKeywords from "./SuggestKeywords.js"
 
 export default function App({ $target }) {
-    this.state = {}
+    this.state = {
+        keyword: '',
+        keywords: []
+    }
     this.setState = nextState => {
         this.state = nextState
+        header.setState({
+            keyword: this.state.keyword
+        })
+        suggestKeywords.setState({
+            keywords: this.state.keywords
+        })
     }
 
     const header = new Header({
-        $target, 
-        onKeywordInput: (keyword) => {
-            if(keyword.trim().length > 1) {
-                console.log(keyword)
+        $target,
+        initialState: {
+            keyword: this.state.keyword
+        },
+        onKeywordInput: async (keyword) => {
+            if (keyword.trim().length > 1) {
+                const keywords = await request(`/keywords?q=${keyword}`)
+                this.setState({
+                    ...this.state,
+                    keyword,
+                    keywords
+                })
             }
+        }
+    })
+
+    const suggestKeywords = new SuggestKeywords({
+        $target,
+        initialState: {
+            keywords: this.state.keywords,
+            cursor: -1 // -1이 아닌 경우 ↑을 누르면 1씩 감소, ↓을 누르면 1씩 증가
+        },
+        onKeywordSelect: (text) => {
+            this.setState({
+                ...this.state,
+                keyword: text
+            })
         }
     })
 }

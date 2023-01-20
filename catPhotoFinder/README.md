@@ -12,11 +12,11 @@
 
 ```
 사용 API
-https://mwu.roto-cat-search-api.programmers.co.kr
+https://mwu.roto-cat-search-api.programmers.co.kr/api/cats
 
-/api/cats/keywords?q={keyword} : : keyword에 해당하는 검색어를 조회한다.
+/keywords?q={keyword} : : keyword에 해당하는 검색어를 조회한다.
 
-/api/cats/search?q={keyword} : keyword에 해당하는 고양이 사진을 검색합니다.
+/search?q={keyword} : keyword에 해당하는 고양이 사진을 검색합니다.
 
 https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 
@@ -26,4 +26,7 @@ https://cdn.roto.codes/css/cat-search.css : 기본 마크업 구조
 - 기본 화면 구성 및 키워드 입력 받기
 
 ### (3)
-- 검색 키워드를 추천해주는 API를 APP에서 호출하고 거기서 받은 데이터를 keyword라고 하는 component로 내려줘서 추천된 내역을 보여주기
+- 검색 키워드를 추천해주는 API를 APP에서 호출하고 거기서 받은 데이터를 keyword라고 하는 component로 내려줘서 연관 검색어 내역을 보여주기
+- 추천된 검색어 중에서 하나를 클릭하면 해당 값으로 input창의 값이 바뀌는 기능
+- 추천된 검색어 창에서 key up, down을 입력했을 때 선택된 항목의 색깔이 바뀌는 기능
+- 항목을 선택하고 enter를 누르면 검색창의 값이 해당 값으로 바뀌는 기능
