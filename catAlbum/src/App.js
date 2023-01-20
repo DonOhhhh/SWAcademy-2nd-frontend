@@ -1,4 +1,5 @@
 import { API_END_POINT, request } from './API.js'
+import BreadCrumb from './Breadcrumb.js';
 import ImageViewer from './ImageViewer.js';
 import Loading from './Loading.js';
 import Nodes from './Nodes.js'
@@ -14,6 +15,28 @@ export default function App({ $target }) {
     }
     const loading = new Loading({
         $target
+    })
+
+    const breadCrumb = new BreadCrumb({
+        $target,
+        initialState: this.state.paths,
+        onClick : async (id) => {
+            if(id) {
+                const nextPaths = id ? [...this.state.paths] : []
+                const pathIndex = nextPaths.findIndex(path => path.id === id)
+                this.setState({
+                    ...this.state,
+                    paths: nextPaths.slice(0, pathIndex+1)
+                })
+            } else {
+                this.setState({
+                    ...this.state,
+                    paths: []
+                })
+            }
+            await fetchNodes(id)
+            
+        }
     })
 
     const nodes = new Nodes({
@@ -69,6 +92,7 @@ export default function App({ $target }) {
             selectedImageUrl: this.state.selectedImageUrl
         })
         loading.setState(this.state.isLoading)
+        breadCrumb.setState(this.state.paths)
     }
 
     const fetchNodes = async (id) => {
