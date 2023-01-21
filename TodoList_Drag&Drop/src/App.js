@@ -2,11 +2,25 @@ import { request } from "./API.js";
 import TodoList from "./TodoList.js";
 
 export default function App({ $target }) {
+
     const incompletedTodoList = new TodoList({
         $target,
         initialState: {
             title: '완료되지 않은 일들',
             todos: []
+        },
+        onDrop: async (todoId) => {
+            const nextTodos = [...this.state.todos]
+            const todoIndex = nextTodos.findIndex(todo => todo._id === todoId)
+            nextTodos[todoIndex].isCompleted = false
+            this.setState({
+                ...this.state,
+                todos: nextTodos
+            })
+            const todos = await request(`/${todoId}/toggle`, {
+                method: 'PUT'
+            })
+            await fetchTodos()
         }
     });
 
@@ -15,6 +29,19 @@ export default function App({ $target }) {
         initialState: {
             title: '완료된 일들',
             todos: []
+        },
+        onDrop: async (todoId) => {
+            const nextTodos = [...this.state.todos]
+            const todoIndex = nextTodos.findIndex(todo => todo._id === todoId)
+            nextTodos[todoIndex].isCompleted = true
+            this.setState({
+                ...this.state,
+                todos: nextTodos
+            })
+            const todos = await request(`/${todoId}/toggle`, {
+                method: 'PUT'
+            })
+            await fetchTodos()
         }
     })
 
@@ -24,7 +51,7 @@ export default function App({ $target }) {
 
     this.setState = nextState => {
         this.state = nextState;
-        const {todos} = this.state;
+        const { todos } = this.state;
         incompletedTodoList.setState({
             ...incompletedTodoList.state,
             todos: todos.filter(todo => !todo.isCompleted)
@@ -36,13 +63,13 @@ export default function App({ $target }) {
         })
     }
 
-    const fetchTodos = async (username) => {
-        const todos = await request(`/${username}`)
+    const fetchTodos = async () => {
+        const todos = await request()
         this.setState({
             ...this.state,
             todos
         })
     }
 
-    fetchTodos('roto');
+    fetchTodos();
 }
