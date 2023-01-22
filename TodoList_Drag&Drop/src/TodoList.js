@@ -1,4 +1,4 @@
-export default function TodoList({ $target, initialState, onDrop }) {
+export default function TodoList({ $target, initialState, onDrop, onRemove }) {
     const $todoList = document.createElement('div')
     $todoList.setAttribute('droppable', 'true')
     $target.appendChild($todoList)
@@ -15,11 +15,13 @@ export default function TodoList({ $target, initialState, onDrop }) {
             `
             <h2>${title}</h2>
             <ul>
-                ${todos.map(todo => `<li data-id="${todo._id}" draggable="true">${todo.content}</li>`).join('')}
+                ${todos.map(todo => `<li data-id="${todo._id}" draggable="true">${todo.content} <button>x</button></li>`).join('')}
             </ul>
             ${todos.length ? '' : '설정된 일들이 없습니다.'}
         `
     }
+
+    this.render();
 
     $todoList.addEventListener('dragstart', e => {
         const $li = e.target.closest('li')
@@ -43,6 +45,14 @@ export default function TodoList({ $target, initialState, onDrop }) {
         const { todos } = this.state;
         if (!todos.find(todo => todo._id === droppedTodoId)) {
             onDrop(droppedTodoId)
+        }
+    })
+
+    $todoList.addEventListener('click', e => {
+        if (e.target.tagName === 'BUTTON') {
+            const $li = e.target.closest('li')
+            if($li)
+                onRemove($li.dataset.id)
         }
     })
 }
