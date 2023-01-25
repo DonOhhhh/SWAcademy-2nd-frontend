@@ -1,39 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import Logo from './components/Logo';
+import Paragraph from './components/Paragraph';
 
 function App() {
-  const name = '리액트'
-  const showLink = false;
-  const showLogo = 'none';
-  const names = ['React', 'Vue', 'Angular'];
 
   return (
     <div className="App">
       <header className="App-header">
-        {
-          showLogo === 'show' ?
-            <img src={logo} className="App-logo" alt="logo" />
-            : <h1>React</h1>
-        }
-        <p>
+        <Logo size={300}/>
+        <Logo />
+        <Logo />
+        <Paragraph>
           Edit <code>src/App.js</code> and save to reload.
-        </p>
-        {showLink && (<a
+        </Paragraph>
+        <Paragraph size={14} color="blue">
+          Edit <code>src/App.js</code> and save to reload.
+        </Paragraph>
+        <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn {name}
-        </a>)}
-
-        <ul>
-          {
-            names.map(item => {
-              return <li key={item}>{item}</li>
-            })
-          }
-        </ul>
+          Learn React
+        </a>
       </header>
     </div>
   );
