@@ -1,23 +1,15 @@
-import { useState } from "react";
-import Board from "./components/Board";
-import Pagination from "./components/Pagination/Pagination";
+import { useRef } from 'react'
+import AutuCounter from './components/AutoCounter/AutoCounter';
+import Input from './components/useRef/input';
 
 function App() {
-  const [page, setPage] = useState(0);
-  const articles = new Array(100).fill().map((_, i) => ({
-    id: i,
-    title: `${i}번 게시물`
-  }))
+  const inputRef = useRef();
 
-  const limit = 10;
-  const offset = page * limit;
-
-  return (
-    <div>
-      <Pagination defaultPage={0} limit={10} total={articles.length} onChange={setPage} />
-      <Board articles={articles.slice(offset, offset + limit)} />
-    </div>
-  );
+  return <div>
+    <Input ref={inputRef} />
+    <button onClick={() => inputRef.current.focus()}>Focus</button>
+    <AutuCounter />
+  </div>
 }
 
 export default App;
